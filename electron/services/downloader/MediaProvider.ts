@@ -1,0 +1,4 @@
+export interface DownloadOptions { url:string; directory:string; filename?:string }
+export interface DownloadProgress { id:string; received:number; total:number; percent:number|null; speed:number }
+export interface MediaProvider { canHandle(url:string):boolean; inspect(url:string):Promise<unknown>; getAvailableFormats(url:string):Promise<unknown[]>; download(options:DownloadOptions, progress:(event:DownloadProgress)=>void):Promise<void>; cancel(downloadId:string):void }
+export class DirectMediaProvider { canHandle(url:string) { try { return ['http:','https:'].includes(new URL(url).protocol); } catch { return false; } } inspect() { throw new Error('Remote inspection is only available for direct media URLs.'); } getAvailableFormats() { return Promise.resolve([]); } download() { throw new Error('Use the secure Electron direct-download service.'); } cancel() {} }

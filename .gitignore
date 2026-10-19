@@ -1,0 +1,12 @@
+node_modules/
+.npm-cache/
+dist/
+dist-electron/
+release/
+work/electron-cache/
+work/builder-cache/
+*.log
+.cache/
+outputs/
+work/
+tsconfig.tsbuildinfo

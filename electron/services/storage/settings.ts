@@ -1,0 +1,4 @@
+import { z } from 'zod';
+export const SettingsSchema = z.object({ downloadDirectory: z.string().max(2048).default(''), videoFormat: z.enum(['mp4','mkv','mov','webm','avi']).default('mp4'), audioFormat: z.enum(['mp3','wav','aac']).default('mp3'), quality: z.enum(['original','360p','480p','720p','1080p']).default('original'), maxConcurrent: z.number().int().min(1).max(5).default(2), theme: z.enum(['dark','light','system']).default('dark'), accent: z.string().regex(/^#[0-9A-Fa-f]{6}$/).default('#1685FF'), notifications: z.boolean().default(true), launchAtStartup: z.boolean().default(false) });
+export type Settings = z.infer<typeof SettingsSchema>;
+export const DEFAULT_SETTINGS: Settings = { downloadDirectory:'', videoFormat:'mp4', audioFormat:'mp3', quality:'original', maxConcurrent:2, theme:'dark', accent:'#1685FF', notifications:true, launchAtStartup:false };

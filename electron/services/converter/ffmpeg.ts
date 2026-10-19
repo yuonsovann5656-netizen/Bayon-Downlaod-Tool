@@ -1,0 +1,2 @@
+export const OUTPUT_FORMATS = ['mp4','mkv','mov','webm','avi','mp3','wav','aac'] as const;
+export function buildConversionArgs(input:string, output:string, format:string, height?:string) { if (!(OUTPUT_FORMATS as readonly string[]).includes(format)) throw new Error('Unsupported output format'); const args=['-nostdin','-n','-i',input]; if(height && height!=='original') { const n=Number(height); if(![360,480,720,1080,1440,2160].includes(n)) throw new Error('Unsupported resolution'); args.push('-vf',`scale=-2:${n}`); } args.push(output); return args; }

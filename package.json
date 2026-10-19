@@ -1,0 +1,91 @@
+{
+  "name": "bayon-downloader",
+  "version": "1.0.1",
+  "private": true,
+  "description": "Bayon Downloader — authorized direct media downloads and local media conversion",
+  "main": "dist-electron/main.js",
+  "scripts": {
+    "dev": "vite --configLoader runner",
+    "electron:dev": "concurrently -k \"vite --configLoader runner --host 127.0.0.1\" \"wait-on http://127.0.0.1:5173 && cross-env VITE_DEV_SERVER_URL=http://127.0.0.1:5173 electron .\"",
+    "build": "tsc -b && vite build --configLoader runner",
+    "build:electron": "tsc -p tsconfig.electron.json",
+    "lint": "eslint .",
+    "test": "vitest run --config vitest.config.cjs",
+    "test:watch": "vitest",
+    "package:win": "npm run build && npm run build:electron && electron-builder --win nsis",
+    "package:portable": "npm run build && npm run build:electron && electron-builder --win portable",
+    "package:win:all": "npm run build && npm run build:electron && electron-builder --win nsis portable"
+  },
+  "dependencies": {
+    "electron-updater": "^6.8.9",
+    "lucide-react": "^0.468.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "undici": "^7.30.1",
+    "zod": "^3.24.1",
+    "zustand": "^5.0.2"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.3.3",
+    "@types/node": "^22.10.5",
+    "@types/react": "^18.3.18",
+    "@types/react-dom": "^18.3.5",
+    "@typescript-eslint/eslint-plugin": "^8.19.1",
+    "@typescript-eslint/parser": "^8.19.1",
+    "@vitejs/plugin-react": "^6.1.2",
+    "concurrently": "^9.1.2",
+    "cross-env": "^7.0.3",
+    "electron": "^44.9.0",
+    "electron-builder": "^26.15.3",
+    "eslint": "^9.17.0",
+    "tailwindcss": "^4.3.3",
+    "typescript": "~5.7.2",
+    "vite": "^8.3.4",
+    "vitest": "^5.0.5",
+    "wait-on": "^8.0.1"
+  },
+  "build": {
+    "appId": "com.bayon.downloader",
+    "productName": "Bayon Downloader",
+    "directories": {
+      "output": "release",
+      "buildResources": "build"
+    },
+    "files": [
+      "dist/**",
+      "dist-electron/**",
+      "package.json"
+    ],
+    "asar": true,
+    "win": {
+      "target": [
+        "nsis"
+      ],
+      "icon": "build/icon.ico",
+      "artifactName": "Bayon-Downloader-Setup-${version}.${ext}",
+      "signExecutable": false
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "deleteAppDataOnUninstall": false
+    },
+    "portable": {
+      "artifactName": "Bayon-Downloader-Portable-${version}.${ext}"
+    },
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "yuonsovann5656-netizen",
+        "repo": "Bayon-Downlaod-Tool"
+      }
+    ]
+  },
+  "author": "Bayon",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yuonsovann5656-netizen/Bayon-Downlaod-Tool.git"
+  }
+}
